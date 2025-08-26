@@ -1,0 +1,22 @@
+# 🎬 Movie Recommender System
+
+A content-based movie recommender built using Streamlit and scikit-learn. It suggests similar movies based on genres, cast, keywords, and director.
+
+## 🛠 Features
+- Content-based filtering using TF-IDF vectorization
+- Clean UI built with Streamlit
+- Movie metadata parsed from zipped and regular CSVs
+
+## 📁 Files
+- `credits.zip`: Contains `credits.csv` (zipped for file size efficiency)
+- `movies.csv`: Standard metadata file
+- `app.py`: Streamlit application
+- `requirements.txt`: Python dependencies
+
+## 🚀 How to Run
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
