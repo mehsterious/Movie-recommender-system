@@ -18,5 +18,5 @@ A content-based movie recommender built using Streamlit and scikit-learn. It sug
 1. Clone the repo:
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/Movie-reccomender-system.git
+cd Movie-reccomender-system
