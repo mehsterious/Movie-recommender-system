@@ -153,21 +153,41 @@ def recommend(movie_title):
 
 
 
-# # --------------------
-# # Streamlit UI
-# # --------------------
-st.title("🎬 Movie Recommender System")
+# --------------------
+# 💅 Streamlit UI (Prettified)
+# --------------------
 
-movie_input = st.selectbox("Choose a movie:", new_df['title'].values)
+st.set_page_config(page_title="Movie Recommender", page_icon="🎬", layout="centered")
 
-if st.button("Get Recommendations"):
+# Custom header style
+st.markdown("""
+    <h1 style='text-align: center; color: #ff4b4b;'>🎬 Movie Recommender System</h1>
+    <p style='text-align: center; font-size: 18px;'>Get 5 similar movie recommendations based on cast, genre, and director</p>
+    <hr style='border: 1px solid #f0f0f0;'>
+""", unsafe_allow_html=True)
+
+# Movie selection
+movie_input = st.selectbox("🔎 Choose a movie to get started:", new_df['title'].values)
+
+# Recommendation button
+if st.button("🚀 Get Recommendations"):
     results = recommend(movie_input)
-    if results is not None:
-        df = pd.DataFrame(results, columns=["Title", "Genres", "Director"])
-        st.subheader(f"Top 5 recommendations for **{movie_input}**:")
-        st.table(df)
+
+    if results:
+        st.markdown(f"<h3 style='text-align: center;'>🎯 Top 5 Movies Similar to <em>{movie_input}</em></h3>", unsafe_allow_html=True)
+        st.markdown("---")
+
+        # Use columns to display recommendations nicely
+        for title, genres, director in results:
+            st.markdown(f"""
+                <div style="border: 1px solid #d3d3d3; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #f9f9f9;">
+                    <h4 style="color: #3366cc;">🎥 {title}</h4>
+                    <p><strong>🎭 Genres:</strong> {genres}</p>
+                    <p><strong>🎬 Director:</strong> {director}</p>
+                </div>
+            """, unsafe_allow_html=True)
     else:
-        st.warning("Movie not found in database!")
+        st.warning("❌ Movie not found in the database.")
 
 
 # console = Console()
@@ -181,4 +201,5 @@ if st.button("Get Recommendations"):
 # for title, genres, director in recommendations:
 #     table.add_row(title.upper(), genres.upper(), director.upper(), style ='bright_yellow')
 # console.print(table)
+
 
