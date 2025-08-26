@@ -160,7 +160,7 @@ st.set_page_config(page_title="Movie Recommender", page_icon="🎬", layout="cen
 
 # Custom header style
 st.markdown("""
-    <h1 style='text-align: center; color: #ff4b4b;'>🎬 Movie Recommender System</h1>
+    <h1 style='text-align: center; color: #ffffff;'>🎬 Movie Recommender System</h1>
     <p style='text-align: center; font-size: 18px;'>Get 5 similar movie recommendations based on cast, genre, and director</p>
     <hr style='border: 1px solid #f0f0f0;'>
 """, unsafe_allow_html=True)
@@ -200,4 +200,5 @@ if st.button("🚀 Get Recommendations"):
 # for title, genres, director in recommendations:
 #     table.add_row(title.upper(), genres.upper(), director.upper(), style ='bright_yellow')
 # console.print(table)
+
 
