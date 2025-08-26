@@ -41,8 +41,6 @@ movies_df.dropna(inplace=True)
 #movies_df.duplicated().sum()
 #movies_df.columns
 # Convert JSON-like strings in the 'genres' column to a list of names
-import json
-import ast
 def extract_names(val):
     if isinstance(val, str):
         try:
@@ -178,14 +176,16 @@ if st.button("🚀 Get Recommendations"):
         st.markdown("---")
 
         # Use columns to display recommendations nicely
-        for title, genres, director in results:
-            st.markdown(f"""
-                <div style="border: 1px solid #d3d3d3; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #f9f9f9;">
-                    <h4 style="color: #3366cc;">🎥 {title}</h4>
-                    <p><strong>🎭 Genres:</strong> {genres}</p>
-                    <p><strong>🎬 Director:</strong> {director}</p>
-                </div>
-            """, unsafe_allow_html=True)
+       for title, genres, director in results:
+                    st.markdown(f"""
+                        <div style="border: 1px solid #d3d3d3; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #ffffff; color: #000000;">
+                            <h4 style="color: #3366cc;">🎥 {title}</h4>
+                            <p><strong>🎭 Genres:</strong> {genres}</p>
+                            <p><strong>🎬 Director:</strong> {director}</p>
+                        </div>
+                    """, unsafe_allow_html=True)
+
+
     else:
         st.warning("❌ Movie not found in the database.")
 
@@ -201,5 +201,6 @@ if st.button("🚀 Get Recommendations"):
 # for title, genres, director in recommendations:
 #     table.add_row(title.upper(), genres.upper(), director.upper(), style ='bright_yellow')
 # console.print(table)
+
 
 
