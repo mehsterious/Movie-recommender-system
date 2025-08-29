@@ -12,6 +12,7 @@ import streamlit as st
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel  # similar to cosine similarity
 import zipfile
+from difflib import get_close_matches
 #nltk.download('punkt')
 #nltk.download('punkt_tab')
 
@@ -164,30 +165,45 @@ st.markdown("""
     <hr style='border: 1px solid #f0f0f0;'>
 """, unsafe_allow_html=True)
 
+from difflib import get_close_matches  # make sure it's imported
+
 # Free-text input instead of dropdown
 movie_input = st.text_input("🔎 Enter a movie name:")
 
 # Button to get recommendations
 if st.button("🚀 Get Recommendations") and movie_input.strip():
-    if movie_input in new_df['title'].values:
-        results = recommend(movie_input)
+    input_normalized = movie_input.lower().strip()
 
-        if results:
-            st.markdown(f"<h3 style='text-align: center;'>Top 5 Movies Similar to <em>{movie_input}</em></h3>", unsafe_allow_html=True)
-            st.markdown("---")
-            for title, genres, director in results:
-                st.markdown(f"""
-                    <div style="border: 1px solid #d3d3d3; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #ffffff; color: #000000;">
-                        <h4 style="color: #3366cc;">🎥 {title}</h4>
-                        <p><strong>Genres:</strong> {genres}</p>
-                        <p><strong>Director:</strong> {director}</p>
-                    </div>
-                """, unsafe_allow_html=True)
-        else:
-            st.warning("❌ No similar movies found.")
+    # Create a mapping from lowercase title to actual title
+    title_map = {title.lower(): title for title in new_df['title'].values}
+
+    # Try exact lowercase match first
+    if input_normalized in title_map:
+        matched_title = title_map[input_normalized]
+        results = recommend(matched_title)
+    elif close_matches := get_close_matches(input_normalized, title_map.keys(), n=1, cutoff=0.6):
+        matched_title = title_map[close_matches[0]]
+        st.info(f"🔍 Did you mean: **{matched_title}**?")
+        results = recommend(matched_title)
+    else:
+        matched_title = None
+        results = None
+
+    # Display recommendations
+    if results:
+        st.markdown(f"<h3 style='text-align: center;'>Top 5 Movies Similar to <em>{matched_title}</em></h3>", unsafe_allow_html=True)
+        st.markdown("---")
+        for title, genres, director in results:
+            st.markdown(f"""
+                <div style="border: 1px solid #d3d3d3; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #ffffff; color: #000000;">
+                    <h4 style="color: #3366cc;">🎥 {title}</h4>
+                    <p><strong>Genres:</strong> {genres}</p>
+                    <p><strong>Director:</strong> {director}</p>
+                </div>
+            """, unsafe_allow_html=True)
     else:
         st.error("🚫 Movie not found in the database. Please try another title.")
-
+    
 
 # console = Console()
 # recommendations = recommend("Avatar")
@@ -200,6 +216,7 @@ if st.button("🚀 Get Recommendations") and movie_input.strip():
 # for title, genres, director in recommendations:
 #     table.add_row(title.upper(), genres.upper(), director.upper(), style ='bright_yellow')
 # console.print(table)
+
 
 
 
