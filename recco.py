@@ -153,40 +153,40 @@ def recommend(movie_title):
 
 
 # --------------------
-# 💅 Streamlit UI (Prettified)
+# Streamlit UI (Prettified)
 # --------------------
 
 st.set_page_config(page_title="Movie Recommender", page_icon="🎬", layout="centered")
 
-# Custom header style
 st.markdown("""
     <h1 style='text-align: center; color: #ffffff;'>🎬 Movie Recommender System</h1>
     <p style='text-align: center; font-size: 18px;'>Get 5 similar movie recommendations based on cast, genre, and director</p>
     <hr style='border: 1px solid #f0f0f0;'>
 """, unsafe_allow_html=True)
 
-# Movie selection
-movie_input = st.selectbox("🔎 Choose a movie to get started:", new_df['title'].values)
+# Free-text input instead of dropdown
+movie_input = st.text_input("🔎 Enter a movie name:")
 
-# Recommendation button
-if st.button("🚀 Get Recommendations"):
-    results = recommend(movie_input)
+# Button to get recommendations
+if st.button("🚀 Get Recommendations") and movie_input.strip():
+    if movie_input in new_df['title'].values:
+        results = recommend(movie_input)
 
-    if results:
-        st.markdown(f"<h3 style='text-align: center;'>Top 5 Movies Similar to <em>{movie_input}</em></h3>", unsafe_allow_html=True)
-        st.markdown("---")
-
-        # Use columns to display recommendations nicely
-        for title, genres, director in results:
-            st.markdown(f"""
-                <div style="border: 1px solid #d3d3d3; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #ffffff; color: #000000;">
-                    <h4 style="color: #3366cc;">🎥 {title}</h4>
-                    <p><strong>Genres:</strong> {genres}</p>
-                    <p><strong>Director:</strong> {director}</p>
-                </div>
-            """, unsafe_allow_html=True)
+        if results:
+            st.markdown(f"<h3 style='text-align: center;'>Top 5 Movies Similar to <em>{movie_input}</em></h3>", unsafe_allow_html=True)
+            st.markdown("---")
+            for title, genres, director in results:
+                st.markdown(f"""
+                    <div style="border: 1px solid #d3d3d3; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #ffffff; color: #000000;">
+                        <h4 style="color: #3366cc;">🎥 {title}</h4>
+                        <p><strong>Genres:</strong> {genres}</p>
+                        <p><strong>Director:</strong> {director}</p>
+                    </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.warning("❌ No similar movies found.")
     else:
-        st.warning("❌ Movie not found in the database.")
+        st.error("🚫 Movie not found in the database. Please try another title.")
 
 
 # console = Console()
@@ -200,6 +200,7 @@ if st.button("🚀 Get Recommendations"):
 # for title, genres, director in recommendations:
 #     table.add_row(title.upper(), genres.upper(), director.upper(), style ='bright_yellow')
 # console.print(table)
+
 
 
 
