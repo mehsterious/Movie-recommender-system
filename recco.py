@@ -173,7 +173,7 @@ if st.button("🚀 Get Recommendations"):
     results = recommend(movie_input)
 
     if results:
-        st.markdown(f"<h3 style='text-align: center;'>🎯 Top 5 Movies Similar to <em>{movie_input}</em></h3>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>Top 5 Movies Similar to <em>{movie_input}</em></h3>", unsafe_allow_html=True)
         st.markdown("---")
 
         # Use columns to display recommendations nicely
@@ -181,8 +181,8 @@ if st.button("🚀 Get Recommendations"):
             st.markdown(f"""
                 <div style="border: 1px solid #d3d3d3; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #ffffff; color: #000000;">
                     <h4 style="color: #3366cc;">🎥 {title}</h4>
-                    <p><strong>🎭 Genres:</strong> {genres}</p>
-                    <p><strong>🎬 Director:</strong> {director}</p>
+                    <p><strong>Genres:</strong> {genres}</p>
+                    <p><strong>Director:</strong> {director}</p>
                 </div>
             """, unsafe_allow_html=True)
     else:
@@ -200,5 +200,6 @@ if st.button("🚀 Get Recommendations"):
 # for title, genres, director in recommendations:
 #     table.add_row(title.upper(), genres.upper(), director.upper(), style ='bright_yellow')
 # console.print(table)
+
 
 
