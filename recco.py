@@ -168,7 +168,7 @@ st.markdown("""
 from difflib import get_close_matches  # make sure it's imported
 
 # Free-text input instead of dropdown
-movie_input = st.text_input("🔎 Enter a movie name:")
+movie_input = st.text_input("Enter a movie name:")
 
 # Button to get recommendations
 if st.button("🚀 Get Recommendations") and movie_input.strip():
@@ -216,6 +216,7 @@ if st.button("🚀 Get Recommendations") and movie_input.strip():
 # for title, genres, director in recommendations:
 #     table.add_row(title.upper(), genres.upper(), director.upper(), style ='bright_yellow')
 # console.print(table)
+
 
 
 
